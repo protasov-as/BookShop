@@ -1,0 +1,4 @@
+com/example/MyBookShopApp/data/Book.class
+com/example/MyBookShopApp/data/BookService.class
+com/example/MyBookShopApp/controllers/MainPageController.class
+com/example/MyBookShopApp/MyBookShopAppApplication.class
