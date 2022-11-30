@@ -1,5 +1,7 @@
 package com.example.MyBookShopApp.struct.book.review;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,11 +13,16 @@ public class BookReviewLikeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(columnDefinition = "INT NOT NULL")
-    private int reviewId;
+//    @Column(columnDefinition = "INT NOT NULL")
+//    private int reviewId;
 
     @Column(columnDefinition = "INT NOT NULL")
     private int userId;
+
+    @ManyToOne
+    @JoinColumn(name = "review_id", nullable = false)
+    @JsonIgnore
+    private BookReviewEntity review;
 
     @Column(columnDefinition = "TIMESTAMP NOT NULL")
     private LocalDateTime time;
@@ -31,13 +38,13 @@ public class BookReviewLikeEntity {
         this.id = id;
     }
 
-    public int getReviewId() {
-        return reviewId;
-    }
-
-    public void setReviewId(int reviewId) {
-        this.reviewId = reviewId;
-    }
+//    public int getReviewId() {
+//        return reviewId;
+//    }
+//
+//    public void setReviewId(int reviewId) {
+//        this.reviewId = reviewId;
+//    }
 
     public int getUserId() {
         return userId;
@@ -61,5 +68,13 @@ public class BookReviewLikeEntity {
 
     public void setValue(short value) {
         this.value = value;
+    }
+
+    public BookReviewEntity getReview() {
+        return review;
+    }
+
+    public void setReview(BookReviewEntity review) {
+        this.review = review;
     }
 }

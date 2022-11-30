@@ -8,6 +8,8 @@ import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "books")
@@ -39,6 +41,17 @@ public class Book {
     private String title;
     @ApiModelProperty("image url")
     private String image;
+
+    @OneToMany(mappedBy = "book")
+    private List<BookFile> bookFileList = new ArrayList<>();
+
+    public List<BookFile> getBookFileList() {
+        return bookFileList;
+    }
+
+    public void setBookFileList(List<BookFile> bookFileList) {
+        this.bookFileList = bookFileList;
+    }
 
     @Column(columnDefinition = "TEXT")
     @ApiModelProperty("book description text")

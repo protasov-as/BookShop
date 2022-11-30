@@ -104,4 +104,6 @@ public interface BookRepository extends JpaRepository<Book, Integer> {
             "where a.slug = :authorSlug"
             , nativeQuery = true)
     Page<Book> getBooksByAuthorSlug(String authorSlug, Pageable nextPage);
+
+    List<Book> findBooksBySlugIn(String[] slugs);
 }

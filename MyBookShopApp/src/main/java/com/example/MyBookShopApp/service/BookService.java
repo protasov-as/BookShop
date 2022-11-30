@@ -2,6 +2,7 @@ package com.example.MyBookShopApp.service;
 
 import com.example.MyBookShopApp.data.Book;
 import com.example.MyBookShopApp.data.BookRepository;
+import com.example.MyBookShopApp.errs.BookstoreApiWrongParameterException;
 import com.example.MyBookShopApp.struct.genre.GenreEntity;
 import io.swagger.v3.oas.models.headers.Header;
 import org.hibernate.tool.schema.internal.exec.ScriptTargetOutputToFile;
@@ -35,9 +36,22 @@ public class BookService {
         return bookRepository.findBooksByAuthorFirstNameContaining(authorName);
     }
 
-    public List<Book> getBooksByTitle(String title){
-        return bookRepository.findBooksByTitleContaining(title);
+    public List<Book> getBooksByTitle(String title) throws BookstoreApiWrongParameterException {
+        if(title.equals("") || title.length()<=1){
+            throw new BookstoreApiWrongParameterException("Wrong values passed to one or more parameters");
+        }else{
+            List<Book> data = bookRepository.findBooksByTitleContaining(title);
+            if(data.size()>0){
+                return data;
+            }else {
+                throw new BookstoreApiWrongParameterException("No data found with specified parameters...");
+            }
+        }
     }
+
+//    public List<Book> getBooksByTitle(String title){
+//        return bookRepository.findBooksByTitleContaining(title);
+//    }
 
     public List<Book> getBooksWithPriceBetween(Integer min, Integer max){
         return bookRepository.findBooksByPriceOldBetween(min,max);
@@ -120,5 +134,9 @@ public class BookService {
 
     public void save(Book bookToUpdate) {
         bookRepository.save(bookToUpdate);
+    }
+
+    public List<Book> findBooksBySlugIn(String[] slugs) {
+        return bookRepository.findBooksBySlugIn(slugs);
     }
 }
